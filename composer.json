@@ -1,0 +1,17 @@
+{
+    "name": "mvaldes/curso",
+    "authors": [
+        {
+            "name": "Miguel Valdes",
+            "email": "miguel.valdes@radarholding.com"
+        }
+    ],
+    "require": {
+        "Illuminate/database": "^5.4"
+    },
+	"autoload": {
+		"psr-4": {
+			"App\\": ""
+		}
+	}
+}

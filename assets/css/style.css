@@ -1,0 +1,12 @@
+.form-card h2{
+	color: #31b1c5;
+}
+.form-card{
+	margin-top: 10px;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	border-radius: 6px;
+}
+.body-fondo{
+	background: url('../img/fondo.jpg');
+}
