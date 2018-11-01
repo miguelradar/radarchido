@@ -13,18 +13,37 @@
 		// La forma se envio
 		
 		$nombre = $_POST['nombre'];
-		$usuario = $_POST['usuario'];
-		$password = $_POST['pass'];
+		$correo = $_POST['correo']; // 16 index correo no esta definido
+		$pass = $_POST['pass'];
 		
-		// Expresiones regulare
-		if(!preg_match('/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/', $password)){
-			$respuesta = '6 caracteres como minimo conteniendo mayusculas, minusculas y numeros';
-		}else if(!preg_match('/^([A-Za-z\d]){4,}$/', $usuario)){
-			$respuesta = 'Nombre de usuario tiene que tener como minimo 4 caracteres';
+		// Expresiones regulare para validar contraseña
+		if(!preg_match('/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/', $pass)){
+			$alerta = '6 caracteres como minimo conteniendo mayusculas, minusculas y numeros';
 		}else{
-			$respuesta = 'Usuario validado';
+			$alerta = 'Usuario validado';
 			
-			// Agregar a la DB el usuario
+			// Comprobamos si el usuario existe
+			$query = "SELECT * FROM usuario WHERE correo = '$correo'";
+			
+			$respuesta = $conexion->query($query);
+			// Debug::parar($conexion);
+			
+			if($respuesta->num_rows > 0){
+				$alerta = 'Usuario ya existe';
+			}else{
+				// Encriptamos la contraseña
+				$pass = hash('sha256', $pass);
+				
+				$insert = "INSERT INTO usuario(nombre, correo, pass) VALUES ('$nombre','$correo','$pass')";
+			
+				$respuesta = $conexion->query($insert);
+				
+				if($respuesta !== true){
+					$alerta = 'Ocurrio un error a registrar el usuario';
+				}else{
+					$alerta = 'Usuario creado con exito';
+				}
+			}
 		}
 	}
 	
@@ -49,8 +68,8 @@
 					<!-- clases col dependeindo de cuantas columnas vallamos a usar
 						segun el grid de bootstrap (12 columnas) -->
 					<h2>Registro de usuario</h2>
-					<?php if(!empty($respuesta)) : ?>
-						<p><?php echo $respuesta; ?></p>
+					<?php if(!empty($alerta)) : ?>
+						<p><?php echo $alerta; ?></p>
 					<?php endif; ?>
 					<form method="post" action="index.php">
 						<!-- clase form group agrupa elementos de una forma -->
@@ -59,12 +78,12 @@
 							<input id="nombre" class="form-control" type="text" name="nombre" required>
 						</div>
 						<div class="form-group">
-							<label for="usuario">Usuario</label>
-							<input id="usuario" class="form-control" type="text" name="usuario" required>
+							<label for="correo">Correo</label>
+							<input id="correo" class="form-control" type="email" name="correo" required>
 						</div>
 						<div class="form-group">
 							<label for="pass">Contraseña</label>
-							<input id="pass" class="form-control"  name="pass" required>
+							<input id="pass" class="form-control" type="password" name="pass" required>
 						</div>
 						<center>
 							<!-- clase Btn es para estilizar botones tambien parte de bootstrap -->
