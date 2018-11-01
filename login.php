@@ -1,9 +1,11 @@
 <?php
 
 	namespace App;
-	
+
+	require_once  './vendor/autoload.php';
+
 	use App\Sys\Debug;
-	
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -11,13 +13,13 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<title>Login</title>
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" 
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
 			integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 		<link rel="stylesheet" href="./assets/css/style.css">
 	</head>
 	<body class="body-fondo">
 		<div class="container">
-			<!-- Clase container es la que da relacion con el viewport 
+			<!-- Clase container es la que da relacion con el viewport
 				necesaria por bootstrap -->
 			<div class="row">
 				<!-- clase row declarar renglones -->
@@ -53,4 +55,3 @@
 		</div>
 	</body>
 </html>
-	
