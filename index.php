@@ -1,43 +1,49 @@
 <?php
 
 	namespace App;
-	
+
 	require_once './vendor/autoload.php';
-	
+
 	use App\Sys\Debug;
 	use App\Sys\Conexion;
-	
+
+	session_start();
+
+	if(!empty($_SESSION) && !empty($_SESSION['correo'])){
+		header('Location: ./home.php');
+	}
+
 	$conexion = new Conexion;
-	
+
 	if(!empty($_POST)){
 		// La forma se envio
-		
+
 		$nombre = $_POST['nombre'];
 		$correo = $_POST['correo']; // 16 index correo no esta definido
 		$pass = $_POST['pass'];
-		
+
 		// Expresiones regulare para validar contraseña
 		if(!preg_match('/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/', $pass)){
 			$alerta = '6 caracteres como minimo conteniendo mayusculas, minusculas y numeros';
 		}else{
 			$alerta = 'Usuario validado';
-			
+
 			// Comprobamos si el usuario existe
 			$query = "SELECT * FROM usuario WHERE correo = '$correo'";
-			
+
 			$respuesta = $conexion->query($query);
 			// Debug::parar($conexion);
-			
+
 			if($respuesta->num_rows > 0){
 				$alerta = 'Usuario ya existe';
 			}else{
 				// Encriptamos la contraseña
 				$pass = hash('sha256', $pass);
-				
+
 				$insert = "INSERT INTO usuario(nombre, correo, pass) VALUES ('$nombre','$correo','$pass')";
-			
+
 				$respuesta = $conexion->query($insert);
-				
+
 				if($respuesta !== true){
 					$alerta = 'Ocurrio un error a registrar el usuario';
 				}else{
@@ -46,7 +52,7 @@
 			}
 		}
 	}
-	
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -54,13 +60,13 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<title>Registro</title>
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" 
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
 			integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 		<link rel="stylesheet" href="./assets/css/style.css">
 	</head>
 	<body class="body-fondo">
 		<div class="container">
-			<!-- Clase container es la que da relacion con el viewport 
+			<!-- Clase container es la que da relacion con el viewport
 				necesaria por bootstrap -->
 			<div class="row">
 				<!-- clase row declarar renglones -->
@@ -103,4 +109,3 @@
 		</div>
 	</body>
 </html>
-	

@@ -5,6 +5,49 @@
 	require_once  './vendor/autoload.php';
 
 	use App\Sys\Debug;
+	use App\Sys\Conexion;
+
+	// Inicia o reanuda una sesion de usuario
+	session_start();
+
+	// $_SESSION variable global creada traz sesion start
+	if(!empty($_SESSION) && !empty($_SESSION['correo'])){
+		header('Location: ./home.php');
+	}
+
+	$conexion = new Conexion;
+	// $_GET | $_POST
+	// $_GET en url
+	// $_POST viajan en cabeza del http
+
+	if($_POST){
+		$correo = $_POST['correo'];
+		$pass = $_POST['pass'];
+
+		$query = "SELECT * FROM usuario WHERE correo = '$correo'";
+
+		// Se ejecuta la consulta
+		$respuesta  =$conexion->query($query);
+
+		if(!$respuesta){
+			Debug::parar($conexion->error);
+		}else{
+			// consulta de usuario
+			if($usuario = $respuesta->fetch_assoc()){ // Agarramos el primer row del resultado [0]
+				$pass = hash('sha256', $pass);
+
+				if(hash_equals($usuario['pass'], $pass)){
+					$alerta = 'Usuario inisio sesion con exito';
+					$_SESSION['id'] = $usuario['id'];
+					$_SESSION['correo'] = $usuario['correo'];
+				}else{
+					$alerta = 'claves erroneas';
+				}
+			}else{
+				$alerta = 'Usuario no existe';
+			}
+		}
+	}
 
 ?>
 <!DOCTYPE html>
@@ -27,15 +70,20 @@
 					<!-- clases col dependeindo de cuantas columnas vallamos a usar
 						segun el grid de bootstrap (12 columnas) -->
 					<h2>Inicio de sesion</h2>
-					<form method="post" action="index.php">
+					<?php
+						if(!empty($alerta)){
+							echo "<p>$alerta</p>";
+						}
+					?>
+					<form method="post" action="login.php">
 						<!-- clase form group agrupa elementos de una forma -->
 						<div class="form-group">
-							<label for="usuario">Usuario</label>
-							<input id="usuario" class="form-control" type="text" name="usuario">
+							<label for="correo">Correo</label>
+							<input id="correo" class="form-control" type="email" name="correo">
 						</div>
 						<div class="form-group">
-							<label for="constrasenia">Contraseña</label>
-							<input id="constrasenia" class="form-control" type="password" name="constrasenia">
+							<label for="pass">Contraseña</label>
+							<input id="pass" class="form-control" type="password" name="pass">
 						</div>
 						<center>
 							<!-- clase Btn es para estilizar botones tambien parte de bootstrap -->
