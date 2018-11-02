@@ -7,8 +7,8 @@ Curso de PHP y weas web para gente fancy
 # Pasos de instalacion
 
 - Descarga el proyecto
-  >Puedes clonarlo: git clone url
-
+	>Puedes clonarlo: git clone url
+	
 - Instalas las dependencias
   >composer install o composer update
 
