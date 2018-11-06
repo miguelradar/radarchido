@@ -40,6 +40,8 @@
 					$alerta = 'Usuario inisio sesion con exito';
 					$_SESSION['id'] = $usuario['id'];
 					$_SESSION['correo'] = $usuario['correo'];
+					
+					header('Location: ./home.php');
 				}else{
 					$alerta = 'claves erroneas';
 				}
