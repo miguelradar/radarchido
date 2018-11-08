@@ -11,6 +11,7 @@
 	$conexion = new Conexion;
 	$servicio = new Servicio;
 	
+	// Tarea - buscar como prevenir el sql injection AQUI vvv
 	$usuario_id = !empty($_GET['id']) ? Servicio::decode($_GET['id']) : 0;
 	
 	$consulta_usuario = $conexion->query("SELECT * FROM usuario WHERE id = $usuario_id");
