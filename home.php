@@ -160,11 +160,12 @@
 							if(empty($lista_usuarios)){
 								echo "<tr><td style='text-align:center' colspan='3'>Sin usuarios</td></tr>";
 							}else{
-								while($usuario = $lista_usuarios->fetch_assoc()){ ?>
+								while($usuario = $lista_usuarios->fetch_assoc()){
+								?>
 									<tr>
 										<td><?php echo $usuario['id']; ?></td>
 										<td><?php echo $usuario['correo']; ?></td>
-										<td><?php echo $usuario['nombre']; ?></td>
+										<td><a href="./perfil.php?id=<?php echo Servicio::encode($usuario['id']); ?>"><?php echo $usuario['nombre']; ?></a></td>
 									</tr>
 								<?php }
 							}
