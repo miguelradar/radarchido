@@ -9,16 +9,15 @@
 	use App\Sys\Conexion;
 	use App\sys\Servicio;
 
-	  // Tarea - Hacer una pagina para cada perfil de usuario
-	  //			que pueda ver la imagen y descripcion
+	// Tarea - Hacer una pagina para cada perfil de usuario
+	//			que pueda ver la imagen y descripcion
 	  
-	  /* Fechas
-	  $fecha = time(); // timestamp
-	  $fecha = date('d/m/Y H:i', $fecha); // formater la fecha
+	/* Fechas
+		$fecha = time(); // timestamp
+		$fecha = date('d/m/Y H:i', $fecha); // formater la fecha
 	  
 	  echo "<pre>";
-	  die(var_dump($fecha)); */
-	  
+	  die(var_dump($fecha)); */ 
 
 	  session_start();
 
@@ -43,6 +42,15 @@
 	$query = "SELECT * FROM usuario ORDER BY id DESC";
 	
 	$lista_usuarios = $mysql->query($query);
+	
+	// ** Forma de hacer solicitudes entre servidores (servicios)
+	/*$solicitud = curl_init();
+	
+	curl_setopt($solicitud, CURLOPT_URL, 'http://localhost:8081/form');
+	curl_setopt($solicitud, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($solicitud, CURLOPT_SSL_VERIFYPEER, false);
+	
+	$resultado = curl_exec($solicitud);*/
  ?>
 
  <!DOCTYPE html>
@@ -143,12 +151,15 @@
 							if(empty($lista_usuarios)){
 								echo "<tr><td style='text-align:center' colspan='3'>Sin usuarios</td></tr>";
 							}else{
+								// Regresar todo los resultados como un arreglo
+								// $usuarios = $lista_usuarios->fetch_all(MYSQLI_ASSOC);
+								
 								while($usuario = $lista_usuarios->fetch_assoc()){
 								?>
 									<tr>
 										<td><?php echo $usuario['id']; ?></td>
 										<td><?php echo $usuario['correo']; ?></td>
-										<td><a href="./perfil.php?id=<?php echo Servicio::encode($usuario['id']); ?>"><?php echo $usuario['nombre']; ?></a></td>
+										<td><a href="./perfil.php?id=<?php echo $usuario['id']; ?>"><?php echo $usuario['nombre']; ?></a></td>
 									</tr>
 								<?php }
 							}
