@@ -159,7 +159,7 @@
 									<tr>
 										<td><?php echo $usuario['id']; ?></td>
 										<td><?php echo $usuario['correo']; ?></td>
-										<td><a href="./perfil.php?id=<?php echo $usuario['id']; ?>"><?php echo $usuario['nombre']; ?></a></td>
+										<td><a href="./perfil.php?data=<?php echo Servicio::encode(['id' => $usuario['id']]); ?>"><?php echo $usuario['nombre']; ?></a></td>
 									</tr>
 								<?php }
 							}

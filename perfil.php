@@ -13,8 +13,8 @@
 	
 	session_start();
 	
-	$usuario_id = !empty($_GET['id']) ? $_GET['id'] : 0;
-	$usuario_id = is_numeric($usuario_id) ? $usuario_id : (int) $usuario_id;
+	$usuario_id = !empty($_GET['data']) ? Servicio::decode($_GET['data']): 0;
+	$usuario_id = $usuario_id->id;
 	$usuario_id = $conexion->real_escape_string($usuario_id);
 	
 	// Consulta vulnerable
@@ -24,7 +24,8 @@
 		// Toda la informacion del usuario
 		$data = [
 			'nombre' => !empty($_POST['nombre']) ? $_POST['nombre'] : '',
-			'descripcion' => !empty($_POST['desc']) ? $_POST['desc'] : ''
+			'descripcion' => !empty($_POST['desc']) ? $_POST['desc'] : '',
+			'imagen' => ''
 		];
 		
 		// La forma fue enviada

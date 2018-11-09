@@ -10,7 +10,7 @@
 		}
 		
 		static public function encode($valor){
-			return base64_encode(json_encode([$valor]));
+			return base64_encode(json_encode($valor));
 		}
 		
 		static public function decode($valor){
