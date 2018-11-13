@@ -8,6 +8,18 @@
 	use App\Sys\Debug;
 	use App\Sys\Conexion;
 	use App\sys\Servicio;
+	
+	/*
+	uso de cookies
+	
+	setcookie('tmp2',serialize([1,2,3,4,5]),time() + 83000,'/');
+	
+	echo $_COOKIE['tmp2'];
+	
+	unset($_COOKIE['tmp2']);
+	
+	setcookie('tmp','',time()-1,'/');
+	die();*/
 
 	// Tarea - Hacer una pagina para cada perfil de usuario
 	//			que pueda ver la imagen y descripcion

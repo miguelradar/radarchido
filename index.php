@@ -6,6 +6,21 @@
 
 	use App\Sys\Debug;
 	use App\Sys\Conexion;
+	use App\Sys\Database;
+	use Illuminate\Database\Capsule\Manager as DB;
+	
+	$db = new Database;
+	
+	// MVC - modelo - vista - controlador
+	// ORM - Object-Relational mapping
+	
+	$usuario = DB::table('usuario');
+	
+	if(false){
+		$usuario = $usuario->where('id','<>',1)->get();
+	}else{
+		$usuario = $usuario->first();
+	}
 
 	session_start();
 
