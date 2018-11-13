@@ -88,7 +88,7 @@
 				<div class="col-12 col-md-6 offset-md-3 bg-white form-card">
 					<!-- clases col dependeindo de cuantas columnas vallamos a usar
 						segun el grid de bootstrap (12 columnas) -->
-					<h2>Registro de usuario</h2>
+					<h2 rel="header">Registro de usuario</h2>
 					<?php if(!empty($alerta)) : ?>
 						<p><?php echo $alerta; ?></p>
 					<?php endif; ?>
@@ -122,5 +122,7 @@
 				</div>
 			</div>
 		</div>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="assets/js/script.js"></script>
 	</body>
 </html>
